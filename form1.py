@@ -71,43 +71,28 @@ if 'intrebari_random' not in st.session_state:
     st.session_state.intrebari_random = random.sample(intrebari, 5)
     st.session_state.index = 0
     st.session_state.scor = 0
-    st.session_state.show_feedback = False
-    st.session_state.last_correct = None
-    st.session_state.raspuns_selectat = None
 
-# === QUIZ FLOW ===
+# === CURRENT QUESTION ===
 if st.session_state.index < 5:
     cur = st.session_state.intrebari_random[st.session_state.index]
     st.subheader(f"Întrebarea {st.session_state.index + 1} din 5")
     st.write(cur['enunt'])
 
     optiuni = ['raspuns1', 'raspuns2', 'raspuns3', 'raspuns4']
-    st.session_state.raspuns_selectat = st.radio(
+    raspuns_selectat = st.radio(
         "Alege varianta corectă:",
         [cur[o] for o in optiuni],
-        index=0,
-        key="radio"
+        index=0
     )
 
-    if not st.session_state.show_feedback:
-        if st.button("Verifică răspunsul"):
-            idx = [cur[o] for o in optiuni].index(st.session_state.raspuns_selectat)
-            st.session_state.last_correct = optiuni[idx] == cur['corect']
-            if st.session_state.last_correct:
-                st.session_state.scor += 1
-            st.session_state.show_feedback = True
-            st.rerun()
-    else:
-        if st.session_state.last_correct:
-            st.success(" Corect!")
-        else:
-            st.error(f" Greșit! Răspunsul corect era: {cur[cur['corect']]}")
-        if st.button("Pasul următor"):
-            st.session_state.index += 1
-            st.session_state.show_feedback = False
-            st.session_state.raspuns_selectat = None
-            st.rerun()
+    if st.button("Continuă"):
+        idx = [cur[o] for o in optiuni].index(raspuns_selectat)
+        if optiuni[idx] == cur['corect']:
+            st.session_state.scor += 1
+        st.session_state.index += 1
+        st.rerun()
 
+# === FINAL RESULT ===
 else:
     st.balloons()
     st.success(f" Ai terminat! Scorul tău: {st.session_state.scor}/5")

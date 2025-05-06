@@ -5,9 +5,16 @@ import base64
 import io
 import streamlit as st
 import webbrowser
+import warnings
+
 
 # Configurare pagină
 st.set_page_config(page_title="Quiz Interactiv", layout="centered")
+
+
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+
 
 st.markdown("""
     <style>
@@ -159,10 +166,12 @@ else:
     st.balloons()
     st.success(f" Ai terminat! Scorul tău: {st.session_state.scor}/5")
 
+    if st.button("Ieși din quiz"):
+        webbrowser.open_new_tab("https://www.horse.cars/")
+
     #  GIF FINAL
     st.markdown("###  Felicitari!")
     st.image("https://media1.tenor.com/m/fQqnqv9QV7gAAAAd/vrbie-vrbs.gif", use_column_width=True)
 
-    if st.button("Ieși din quiz"):
-        webbrowser.open_new_tab("https://www.horse.cars/")
+   
 

@@ -171,7 +171,7 @@ else:
 
     #  GIF FINAL
     st.markdown("###  Felicitari!")
-    st.image("https://media1.tenor.com/m/fQqnqv9QV7gAAAAd/vrbie-vrbs.gif", use_column_width=True)
+    st.image("https://media1.tenor.com/m/fQqnqv9QV7gAAAAd/vrbie-vrbs.gif", use_container_width=True)
 
    
 

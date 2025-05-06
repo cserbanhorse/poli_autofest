@@ -169,9 +169,6 @@ else:
     if st.button("Ieși din quiz"):
         webbrowser.open_new_tab("https://www.horse.cars/")
 
-    #  GIF FINAL
-    st.markdown("###  Felicitari!")
-    st.image("https://media1.tenor.com/m/fQqnqv9QV7gAAAAd/vrbie-vrbs.gif", use_container_width=True)
 
    
 

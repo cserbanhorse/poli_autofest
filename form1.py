@@ -2,18 +2,10 @@ import streamlit as st
 import random
 from PIL import Image
 import base64
-
-import os
-os.environ["PYTHONWARNINGS"] = "ignore"  # Hide all Python warnings
-
-import warnings
-warnings.filterwarnings("ignore", category=DeprecationWarning)
-
-
-
+ 
 # CONFIG
 st.set_page_config(page_title="Quiz Interactiv", layout="centered")
-
+ 
 # === STYLE ===
 st.markdown("""
     <style>
@@ -24,36 +16,36 @@ st.markdown("""
             padding: 10px 24px;
             border-radius: 5px;
         }
-
+ 
         .stButton > button:hover {
             background-color: #333333;
             color: white;
         }
-
+ 
         div[data-baseweb="radio"] div[role="radio"] {
             background-color: white;
             border: 2px solid black;
         }
-
+ 
         div[data-baseweb="radio"] div[role="radio"][aria-checked="true"] {
             background-color: black;
             color: white;
         }
-
+ 
         div[data-baseweb="radio"] div[role="radio"]:hover {
             border-color: black;
         }
-
+ 
         div[data-baseweb="radio"] div[role="radio"]:focus {
             outline: none;
         }
     </style>
 """, unsafe_allow_html=True)
-
+ 
 # === ENCODE LOGO ===
 with open("horse-white-logo.png", "rb") as image_file:
     encoded = base64.b64encode(image_file.read()).decode()
-
+ 
 # === HEADER ===
 st.markdown(f"""
     <div style='background-color:#000000;padding:10px 20px;display:flex;align-items:center;'>
@@ -61,18 +53,18 @@ st.markdown(f"""
         <h1 style='color:white;font-size:20px;margin:0;'>Quiz Interactiv</h1>
     </div>
 """, unsafe_allow_html=True)
-
+ 
 # === QUESTIONS ===
 static_image_question = {
     "enunt": "Ce componentă auto este arătată în imagine?",
-    "image": "./engine.jpg",  # Make sure the image is in the same folder
+    "image": "./engine.jpg",  # Imagine în același folder
     "raspuns1": "Ambreiaj",
     "raspuns2": "Cutie de viteze",
     "raspuns3": "Motor",
     "raspuns4": "Radiator",
     "corect": "raspuns3"
 }
-
+ 
 other_questions = [
     {"enunt": "Care este capitala Italiei?", "raspuns1": "Madrid", "raspuns2": "Roma", "raspuns3": "Paris", "raspuns4": "Lisabona", "corect": "raspuns2"},
     {"enunt": "Câte continente există pe Pământ?", "raspuns1": "1", "raspuns2": "7", "raspuns3": "4", "raspuns4": "2", "corect": "raspuns2"},
@@ -83,50 +75,52 @@ other_questions = [
     {"enunt": "Cât face 9 × 7?", "raspuns1": "56", "raspuns2": "63", "raspuns3": "72", "raspuns4": "69", "corect": "raspuns2"},
     {"enunt": "Cine a pictat „Mona Lisa”?", "raspuns1": "Michelangelo", "raspuns2": "Leonardo da Vinci", "raspuns3": "Pablo Picasso", "raspuns4": "Van Gogh", "corect": "raspuns2"}
 ]
-
+ 
 # === SESSION INIT ===
 if 'intrebari_random' not in st.session_state:
     selected_others = random.sample(other_questions, 4)
     st.session_state.intrebari_random = random.sample([static_image_question] + selected_others, 5)
     st.session_state.index = 0
     st.session_state.scor = 0
-
+ 
 # === CURRENT QUESTION ===
 if st.session_state.index < 5:
     cur = st.session_state.intrebari_random[st.session_state.index]
     st.subheader(f"Întrebarea {st.session_state.index + 1} din 5")
     st.write(cur['enunt'])
-
+ 
     if 'image' in cur:
         img = Image.open(cur['image'])
-        st.image(img, use_column_width=True)
-
+        st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
+        st.image(img, width=300)
+        st.markdown("</div>", unsafe_allow_html=True)
+ 
     optiuni = ['raspuns1', 'raspuns2', 'raspuns3', 'raspuns4']
     raspuns_selectat = st.radio(
         "Alege varianta corectă:",
         [cur[o] for o in optiuni],
         index=0
     )
-
+ 
     if st.button("Continuă"):
         idx = [cur[o] for o in optiuni].index(raspuns_selectat)
         if optiuni[idx] == cur['corect']:
             st.session_state.scor += 1
         st.session_state.index += 1
         st.rerun()
-
+ 
 # === FINAL RESULT ===
 else:
     st.balloons()
     st.success(f" Ai terminat! Scorul tău: {st.session_state.scor}/5")
-
+ 
     col1, col2 = st.columns(2)
     with col1:
         if st.button("Reia quiz-ul"):
             for key in ['intrebari_random', 'index', 'scor']:
                 del st.session_state[key]
             st.rerun()
-
+ 
     with col2:
         if st.button("Ieși"):
             st.markdown("<meta http-equiv='refresh' content='0; URL=https://www.horse.cars/' />", unsafe_allow_html=True)

@@ -61,9 +61,15 @@ intrebari = [
     {"enunt": "Cine a scris „Hamlet”?", "raspuns1": "Dante Alighieri", "raspuns2": "J.K. Rowling", "raspuns3": "William Shakespeare", "raspuns4": "Lev Tolstoi", "corect": "raspuns3"},
     {"enunt": "În ce an a avut loc Revoluția Franceză?", "raspuns1": "1789", "raspuns2": "1848", "raspuns3": "1812", "raspuns4": "1914", "corect": "raspuns1"},
     {"enunt": "Ce planetă este cunoscută ca „Planeta Roșie”?", "raspuns1": "Venus", "raspuns2": "Jupiter", "raspuns3": "Marte", "raspuns4": "Saturn", "corect": "raspuns3"},
-    {"enunt": "Ce limbaj se folosește pentru pagini web?", "raspuns1": "Python", "raspuns2": "HTML", "raspuns3": "SQL", "raspuns4": "Java", "corect": "raspuns2"},
-    {"enunt": "Cât face 9 × 7?", "raspuns1": "56", "raspuns2": "63", "raspuns3": "72", "raspuns4": "69", "corect": "raspuns2"},
-    {"enunt": "Cine a pictat „Mona Lisa”?", "raspuns1": "Michelangelo", "raspuns2": "Leonardo da Vinci", "raspuns3": "Pablo Picasso", "raspuns4": "Van Gogh", "corect": "raspuns2"}
+    {
+        "enunt": "Ce componentă auto este arătată în imagine?",
+        "image": "./engine.jpg",  # Make sure this file exists
+        "raspuns1": "Ambreiaj",
+        "raspuns2": "Cutie de viteze",
+        "raspuns3": "Motor",
+        "raspuns4": "Radiator",
+        "corect": "raspuns3"
+    }
 ]
 
 # === SESSION INIT ===
@@ -77,6 +83,11 @@ if st.session_state.index < 5:
     cur = st.session_state.intrebari_random[st.session_state.index]
     st.subheader(f"Întrebarea {st.session_state.index + 1} din 5")
     st.write(cur['enunt'])
+
+    # Show image if exists
+    if 'image' in cur:
+        img = Image.open(cur['image'])
+        st.image(img, use_column_width=True)
 
     optiuni = ['raspuns1', 'raspuns2', 'raspuns3', 'raspuns4']
     raspuns_selectat = st.radio(

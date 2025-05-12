@@ -3,6 +3,10 @@ import random
 from PIL import Image
 import base64
 
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+
 # CONFIG
 st.set_page_config(page_title="Quiz Interactiv", layout="centered")
 
@@ -55,26 +59,31 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # === QUESTIONS ===
-intrebari = [
+static_image_question = {
+    "enunt": "Ce componentă auto este arătată în imagine?",
+    "image": "./engine.jpg",  # Make sure the image is in the same folder
+    "raspuns1": "Ambreiaj",
+    "raspuns2": "Cutie de viteze",
+    "raspuns3": "Motor",
+    "raspuns4": "Radiator",
+    "corect": "raspuns3"
+}
+
+other_questions = [
     {"enunt": "Care este capitala Italiei?", "raspuns1": "Madrid", "raspuns2": "Roma", "raspuns3": "Paris", "raspuns4": "Lisabona", "corect": "raspuns2"},
     {"enunt": "Câte continente există pe Pământ?", "raspuns1": "1", "raspuns2": "7", "raspuns3": "4", "raspuns4": "2", "corect": "raspuns2"},
     {"enunt": "Cine a scris „Hamlet”?", "raspuns1": "Dante Alighieri", "raspuns2": "J.K. Rowling", "raspuns3": "William Shakespeare", "raspuns4": "Lev Tolstoi", "corect": "raspuns3"},
     {"enunt": "În ce an a avut loc Revoluția Franceză?", "raspuns1": "1789", "raspuns2": "1848", "raspuns3": "1812", "raspuns4": "1914", "corect": "raspuns1"},
     {"enunt": "Ce planetă este cunoscută ca „Planeta Roșie”?", "raspuns1": "Venus", "raspuns2": "Jupiter", "raspuns3": "Marte", "raspuns4": "Saturn", "corect": "raspuns3"},
-    {
-        "enunt": "Ce componentă auto este arătată în imagine?",
-        "image": "./engine.jpg",  # Make sure this file exists
-        "raspuns1": "Ambreiaj",
-        "raspuns2": "Cutie de viteze",
-        "raspuns3": "Motor",
-        "raspuns4": "Radiator",
-        "corect": "raspuns3"
-    }
+    {"enunt": "Ce limbaj se folosește pentru pagini web?", "raspuns1": "Python", "raspuns2": "HTML", "raspuns3": "SQL", "raspuns4": "Java", "corect": "raspuns2"},
+    {"enunt": "Cât face 9 × 7?", "raspuns1": "56", "raspuns2": "63", "raspuns3": "72", "raspuns4": "69", "corect": "raspuns2"},
+    {"enunt": "Cine a pictat „Mona Lisa”?", "raspuns1": "Michelangelo", "raspuns2": "Leonardo da Vinci", "raspuns3": "Pablo Picasso", "raspuns4": "Van Gogh", "corect": "raspuns2"}
 ]
 
 # === SESSION INIT ===
 if 'intrebari_random' not in st.session_state:
-    st.session_state.intrebari_random = random.sample(intrebari, 5)
+    selected_others = random.sample(other_questions, 4)
+    st.session_state.intrebari_random = random.sample([static_image_question] + selected_others, 5)
     st.session_state.index = 0
     st.session_state.scor = 0
 
@@ -84,7 +93,6 @@ if st.session_state.index < 5:
     st.subheader(f"Întrebarea {st.session_state.index + 1} din 5")
     st.write(cur['enunt'])
 
-    # Show image if exists
     if 'image' in cur:
         img = Image.open(cur['image'])
         st.image(img, use_column_width=True)
@@ -108,5 +116,13 @@ else:
     st.balloons()
     st.success(f" Ai terminat! Scorul tău: {st.session_state.scor}/5")
 
-    if st.button("Ieși din quiz"):
-        st.markdown("<meta http-equiv='refresh' content='0; URL=https://www.horse.cars/' />", unsafe_allow_html=True)
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("Reia quiz-ul"):
+            for key in ['intrebari_random', 'index', 'scor']:
+                del st.session_state[key]
+            st.rerun()
+
+    with col2:
+        if st.button("Ieși"):
+            st.markdown("<meta http-equiv='refresh' content='0; URL=https://www.horse.cars/' />", unsafe_allow_html=True)

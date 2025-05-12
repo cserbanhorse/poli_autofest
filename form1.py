@@ -3,8 +3,12 @@ import random
 from PIL import Image
 import base64
 
+import os
+os.environ["PYTHONWARNINGS"] = "ignore"  # Hide all Python warnings
+
 import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
+
 
 
 # CONFIG

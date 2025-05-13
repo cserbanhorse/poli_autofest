@@ -4,7 +4,7 @@ from PIL import Image
 import base64
 
 # === CONFIG ===
-st.set_page_config(page_title="Quiz Interactiv", layout="centered")
+st.set_page_config(page_title="Quiz", layout="centered")
 
 # === CSS CUSTOM ===
 st.markdown("""
@@ -49,7 +49,7 @@ with open("horse-white-logo.png", "rb") as image_file:
 st.markdown(f"""
     <div style='background-color:#000000;padding:10px 20px;display:flex;align-items:center;'>
         <img src='data:image/png;base64,{encoded}' style='height:40px;margin-right:10px;' />
-        <h1 style='color:white;font-size:20px;margin:0;'>Quiz Interactiv</h1>
+        
     </div>
 """, unsafe_allow_html=True)
 
@@ -85,8 +85,8 @@ other_questions = [
     {
         "enunt": "Compania HORSE produce:",
         "raspuns1": "Vehicule electrice",
-        "raspuns2": "Vehicule pe benzina",
-        "raspuns3": "Motoare si cutii de viteze termice si hibride",
+        "raspuns2": "Vehicule pe benzină",
+        "raspuns3": "Motoare și cutii de viteze termice și hibride",
         "corect": "raspuns3"
     },
     {
@@ -97,17 +97,24 @@ other_questions = [
         "corect": "raspuns1"
     },
     {
-        "enunt": "Ce combina un motor hibrid",
-        "raspuns1": "Doua motoare termice",
-        "raspuns2": "Un motor termic si unul electric",
-        "raspuns3": "Doua motoare electrice",
+        "enunt": "Ce combină un motor hibrid",
+        "raspuns1": "Două motoare termice",
+        "raspuns2": "Un motor termic și unul electric",
+        "raspuns3": "Două motoare electrice",
         "corect": "raspuns2"
     },
     {
-        "enunt": "Unde este sediul central al companiei HORSE?",
-        "raspuns1": "Paris",
-        "raspuns2": "Madrid",
-        "raspuns3": "Bucuresti",
+        "enunt": "Acționarii majoritari ai companiei HORSE sunt:",
+        "raspuns1": "Renault & Toyota",
+        "raspuns2": "Renault & Geely",
+        "raspuns3": "Renault & Nissan",
+        "corect": "raspuns2"
+    },
+      {
+        "enunt": "Ce parteneriat a încheiat HORSE în sectorul maritim?",
+        "raspuns1": "Rolls Royce",
+        "raspuns2": "Hybdor",
+        "raspuns3": "Wärtsilä",
         "corect": "raspuns2"
     },
     {
@@ -139,11 +146,60 @@ other_questions = [
         "corect": "raspuns2"
     },
     {
-        "enunt": "Ce componentă nu face parte dintr-un sistem de transmisie?",
+        "enunt": "Ce element NU este produs de HORSE?",
+        "raspuns1": "Motoar",
+        "raspuns2": "Cutie de viteze",
+        "raspuns3": "Caroserie auto",
+        "corect": "raspuns3"
+    },
+    {
+        "enunt": "Care este rolul unei cutii de viteze?",
+        "raspuns1": "Încetinește mașina",
+        "raspuns2": "Reglează cuplul și viteza motorului",
+        "raspuns3": "Doar decorează",
+        "corect": "raspuns2"
+    },
+    {
+        "enunt": "Care este scopul principal al companiei HORSE?",
+        "raspuns1": "Fabricarea de automobile electrice",
+        "raspuns2": "Dezvoltarea de propulsii cu emisii reduse",
+        "raspuns3": "Comercializarea de piese auto",
+        "corect": "raspuns2"
+    },
+    {
+        "enunt": "Care este una dintre tehnologiile alternative pe care le explorează HORSE?",
+        "raspuns1": "Propulsie nucleară",
+        "raspuns2": "Energie solară",
+        "raspuns3": "Hidrogen",
+        "corect": "raspuns3"
+    },
+    {
+        "enunt": "Care este un avantaj al motoarelor hibride?",
+        "raspuns1": "Consum redus",
+        "raspuns2": "Emisii crescute",
+        "raspuns3": "Viteză maximă mai mică",
+        "corect": "raspuns1"
+    }, 
+    {
+        "enunt": "Ce definește un sistem mild-hybrid?",
+        "raspuns1": "Nu are baterie",
+        "raspuns2": "Are un mic motor electric care asistă motorul termic",
+        "raspuns3": "E complet electric",
+        "corect": "raspuns2"
+    },  
+    {
+        "enunt": "Ce componentă NU face parte dintr-un sistem de transmisie?",
         "raspuns1": "Ambreiaj",
         "raspuns2": "Cutia de viteze",
         "raspuns3": "Parbriz",
         "corect": "raspuns3"
+    }, 
+    {
+        "enunt": "În ce se măsoară cuplul motor?",
+        "raspuns1": "Nm",
+        "raspuns2": "kW",
+        "raspuns3": "RPM",
+        "corect": "raspuns1"
     }
 ]
 
